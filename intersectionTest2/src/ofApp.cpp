@@ -112,11 +112,15 @@ void ofApp::draw(){
             ofPoint perp;
             
             for (int i= 0; i < lines.size(); i++){
-                for (int j = 0; j < lines[i].size()-1; j++){
-                
+                for (int j = 1; j < lines[i].size(); j++){
+                    int startPoint = j;
+                    int endPoint = j+1;
+                    if (j == lines[i].size() -1) {
+                      endPoint = 1;
+                    }
                     ofPoint intersection;
                     
-                    if (ofLineSegmentIntersection(a, b, lines[i][j], lines[i][j+1], intersection)){
+                    if (ofLineSegmentIntersection(a, b, lines[i][startPoint], lines[i][endPoint], intersection)){
                         float distance = (a - intersection).length();
                         if (distance > 0.01){
                             if (distance < minDistance){
@@ -125,7 +129,7 @@ void ofApp::draw(){
                                 bIntersectsWord = true;
                                 
                                 
-                                ofPoint diff = lines[i][j+1] - lines[i][j];
+                                ofPoint diff = lines[i][endPoint] - lines[i][startPoint];
                                 //ofPoint perp;
                                 perp.set(diff.y, -diff.x);
                                 
